@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.domain.BaseDomain;
+import org.example.exception.ObjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -22,17 +24,21 @@ public abstract class DB<T extends BaseDomain> {
     public void add(T t) {
         data.add(t);
     }
-    public void update(T t, UUID id) {
+    public void update(T t, String id) {
         int index = data.indexOf(data.stream().filter(
-                o -> o.getId().equals(id)).findFirst().orElseThrow(ObjectCollectedException::new));
+                o -> o.getId().equals(id)).findFirst().orElseThrow(ObjectNotFoundException::new));
         data.set(index, t);
     }
 
-    public T get(UUID id){
-        return data.stream().filter(t1 -> t1.getId() == id).findFirst().orElseThrow(ObjectCollectedException::new);
+    public T get(String id){
+        return data.stream().filter(t1 -> Objects.equals(t1.getId(), id)).findFirst().orElseThrow(ObjectNotFoundException::new);
+    }
+
+    public List<T> getAll(){
+        return data;
     }
     
-    public void delete(UUID id){
-        data.removeIf(t1 -> t1.getId() == id);
+    public void delete(String id){
+        data.removeIf(t1 -> Objects.equals(t1.getId(), id));
     }
 }

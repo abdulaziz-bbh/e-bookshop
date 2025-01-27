@@ -1,6 +1,8 @@
 package org.example.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.example.util.Utils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,11 +12,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
+@SuperBuilder
 public abstract class BaseDomain {
 
-    private UUID id;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String id = Utils.generateId();
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 }

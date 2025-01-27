@@ -16,8 +16,11 @@ public class Utils {
         return new Scanner(System.in);
     }
 
-    public static void print(String value) {
+    public static void println(String value) {
         System.out.println(value);
+    }
+    public static void print(String value) {
+        System.out.print(value);
     }
 
     public static boolean  isEmpty(String value){
